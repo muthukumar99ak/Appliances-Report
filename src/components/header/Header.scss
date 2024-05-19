@@ -1,0 +1,14 @@
+@use '../../styles/Utils';
+@use '../../styles/Colors';
+@use '../../styles/Fonts';
+
+.header-container {
+    padding: 15px 20px;
+    background: Colors.$white;
+
+    .heading {
+        @include Fonts.font-semi-bold-huge();
+        // @include Utils.make-dir-style-value(text-align, left, right);
+        margin: 0;
+    }
+}

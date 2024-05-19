@@ -1,0 +1,32 @@
+@use '../../styles/Utils';
+@use '../../styles/Colors';
+@use '../../styles/Fonts';
+
+.tab-container {
+    .tab-buttons {
+        @include Utils.center-align-items();
+        gap: 10px;
+
+        button {
+            padding: 12px 10px;
+            @include Fonts.font-semi-bold-normal();
+            border: 0;
+            border-bottom: 2px solid transparent;
+            outline: none;
+            color: Colors.$light-grey;
+            background: Colors.$white;
+            cursor: pointer;
+            transition: all linear .3s;
+
+            &.active {
+                color: Colors.$active;
+                border-bottom: 2px solid Colors.$active;
+            }
+        }
+    }
+
+    .tab-content {
+        padding: 15px;
+        @include Fonts.font-normal();      
+    }
+}

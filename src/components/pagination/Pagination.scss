@@ -1,0 +1,45 @@
+@use '../../styles/Utils';
+@use '../../styles/Colors';
+@use '../../styles/Fonts';
+
+.pagination-container {
+    @include Utils.center-align-items();
+
+    .pagination-arrow {
+        width: 30px;
+        height: 32px;
+        @include Utils.center-align();
+        margin: 0 3px;
+        cursor: pointer;
+
+        &.disabled {
+            opacity: .5;
+            cursor: unset;
+            pointer-events: none;
+        }
+    }
+
+    .pagination-list {
+        list-style: none;
+        @include Utils.center-align-items();
+        padding: 0;
+        margin: 0;
+        gap: 3px;
+
+        li {
+            width: 30px;
+            height: 32px;
+            border-radius: 8px;
+            @include Utils.center-align();
+            @include Fonts.font-semi-bold-small();
+            cursor: pointer;
+
+            &.active {
+                color: Colors.$active;
+                border: 1px solid Colors.$active;
+                background: Colors.$light-active;
+                pointer-events: none;
+            }
+        }
+    }
+}

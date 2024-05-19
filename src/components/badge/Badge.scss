@@ -1,0 +1,71 @@
+@use '../../styles/Utils';
+@use '../../styles/Colors';
+@use '../../styles/Fonts';
+
+$badge-color-mapper: (
+  "red": Colors.$red,
+  "blue": Colors.$blue,
+  "grey": Colors.$grey,
+  "green": Colors.$green,
+  "yellow": Colors.$yellow
+);
+
+.badge-container {
+    position: relative;
+    @include Fonts.font-normal();
+    color: Colors.$primary-black;
+    display: inline-flex !important;
+    @include Utils.center-align-items();
+    @include Utils.make-dir-style-value(text-align, left, right);
+    @include Utils.make-dir-style-attribute(padding-left, padding-right, 20px);
+
+    span.count {
+        @include Fonts.font-semi-bold-small();
+        @include Utils.make-dir-style-value(text-align, left, right);
+        @include Utils.make-dir-style-attribute(margin-right, margin-left, 5px);
+    }
+
+    &::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 3px;
+        position: absolute;
+        margin: auto;
+        top: 0;
+        bottom: 0;
+        background-color: Colors.$grey;
+        @include Utils.make-dir-style-attribute(left, right, 0);
+    }
+
+    @each $badge, $color in $badge-color-mapper {
+        &.#{$badge}-badge::before {
+            background-color: $color;
+        }
+    }
+
+    &.icon-available {
+        @include Utils.make-dir-style-attribute(padding-left, padding-right, 5px);
+
+        .badge-icon {
+            @include Utils.make-dir-style-attribute(margin-right, margin-left, 5px);
+        }
+
+        &::before {
+            display: none;
+        }
+    }
+
+    &.rounded-badge {
+        background: Colors.$button-background;
+        padding: 5px;
+        border-radius: 30px;
+        color: Colors.$primary-black;
+        @include Fonts.font-semi-bold-small();
+
+        &::before {
+            border-radius: 50%;
+            @include Utils.make-dir-style-attribute(left, right, 5px);
+        }
+    }
+}

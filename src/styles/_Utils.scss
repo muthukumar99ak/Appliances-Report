@@ -1,0 +1,52 @@
+@mixin dir-ltr {
+    html[dir="ltr"] & {
+        @content;
+    }
+}
+
+@mixin dir-rtl {
+    html[dir="rtl"] & {
+        @content;
+    }
+}
+
+@mixin make-dir-style-value($styleAttribute,
+    $ltrAttributeValue,
+    $rtlAttributeValue) {
+    @include dir-ltr {
+        #{$styleAttribute}: #{$ltrAttributeValue};
+    }
+
+    @include dir-rtl {
+        #{$styleAttribute}: #{$rtlAttributeValue};
+    }
+}
+
+@mixin make-dir-style-attribute($ltrStyleAttribute,
+    $rtlStyleAttribute,
+    $attributeValue) {
+
+    @include dir-ltr {
+        #{$ltrStyleAttribute}: #{$attributeValue};
+    }
+
+    @include dir-rtl {
+        #{$rtlStyleAttribute}: #{$attributeValue};
+    }
+}
+
+@mixin center-align($alignItemValue: center, $justifyContentValue: center) {
+    display: flex;
+    align-items: $alignItemValue;
+    justify-content: $justifyContentValue;
+}
+
+@mixin center-align-items($alignItemValue: center) {
+    display: flex;
+    align-items: $alignItemValue;
+}
+
+@mixin center-justify-content($justifyContentValue: center) {
+    display: flex;
+    justify-content: $justifyContentValue;
+}

@@ -1,0 +1,138 @@
+/* #region Font Styles - Regular */
+
+@mixin font-tiny {
+    font-family: "Commissioner", sans-serif;
+    font-weight: 400;
+    font-size: 10px;
+}
+
+@mixin font-normal {
+    font-family: "Commissioner", sans-serif;
+    font-weight: 400;
+    font-size: 14px;
+}
+
+@mixin font-small {
+    font-family: "Commissioner", sans-serif;
+    font-weight: 400;
+    font-size: 12px;
+}
+
+@mixin font-medium {
+    font-family: "Commissioner", sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+}
+
+@mixin font-large {
+    font-family: "Commissioner", sans-serif;
+    font-weight: 400;
+    font-size: 20px;
+}
+
+@mixin font-huge {
+    font-family: "Commissioner", sans-serif;
+    font-weight: 400;
+    font-size: 28px;
+}
+
+@mixin font-mammoth {
+    font-family: "Commissioner", sans-serif;
+    font-weight: 400;
+    font-size: 30px;
+}
+
+/* #endregion Font Styles - Regular */
+
+
+/* #region Font Styles - Semibold */
+
+@mixin font-semi-bold-tiny {
+    font-family: "Commissioner", sans-serif;
+    font-weight: 500;
+    font-size: 10px;
+}
+
+@mixin font-semi-bold-small {
+    font-family: "Commissioner", sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+}
+
+@mixin font-semi-bold-normal {
+    font-family: "Commissioner", sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+}
+
+@mixin font-semi-bold-medium {
+    font-family: "Commissioner", sans-serif;
+    font-weight: 500;
+    font-size: 16px;
+}
+
+@mixin font-semi-bold-large {
+    font-family: "Commissioner", sans-serif;
+    font-weight: 500;
+    font-size: 20px;
+}
+
+@mixin font-semi-bold-huge {
+    font-family: "Commissioner", sans-serif;
+    font-weight: 500;
+    font-size: 28px;
+}
+
+@mixin font-semi-bold-mammoth {
+    font-family: "Commissioner", sans-serif;
+    font-weight: 500;
+    font-size: 30px;
+}
+
+/* #endregion Font Styles - Semibold */
+
+/* #region Font Styles - Bold */
+
+@mixin font-bold-tiny {
+    font-family: "Commissioner", sans-serif;
+    font-weight: 600;
+    font-size: 10px;
+}
+
+@mixin font-bold-small {
+    font-family: "Commissioner", sans-serif;
+    font-weight: 600;
+    font-size: 12px;
+}
+
+@mixin font-bold-normal {
+    font-family: "Commissioner", sans-serif;
+    font-weight: 600;
+    font-size: 14px;
+}
+
+@mixin font-bold-medium {
+    font-family: "Commissioner", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+@mixin font-bold-large {
+    font-family: "Commissioner", sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+}
+
+@mixin font-bold-huge {
+    font-family: "Commissioner", sans-serif;
+    font-weight: 600;
+    font-size: 28px;
+}
+
+@mixin font-bold-mammoth {
+    font-family: "Commissioner", sans-serif;
+    font-weight: 600;
+    font-size: 30px;
+}
+
+/* #endregion Font Styles - Bold */

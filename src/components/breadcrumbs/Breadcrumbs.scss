@@ -1,0 +1,34 @@
+@use '../../styles/Utils';
+@use '../../styles/Colors';
+@use '../../styles/Fonts';
+
+.breadcrumbs-container {
+    .breadcrumb {
+        list-style: none;
+        padding: 0 22px;
+        margin: 20px 0;
+        @include Utils.center-align-items();
+        @include Utils.make-dir-style-value(text-align, left, right);
+
+        .breadcrumb-item {
+            @include Fonts.font-semi-bold-small();
+            @include Utils.center-align-items();
+            color: Colors.$light-grey;
+            margin: 0 5px;
+
+            svg {
+                @include Utils.make-dir-style-attribute(margin-right, margin-left, 10px);
+            }
+
+            a {
+                text-decoration: none;
+                color: Colors.$light-grey;
+            }
+
+            &:last-child {
+                @include Fonts.font-small();
+                color: Colors.$primary-black;
+            }
+        }
+    }
+}

@@ -1,0 +1,95 @@
+@use '../../styles/Utils';
+@use '../../styles/Colors';
+@use '../../styles/Fonts';
+
+.table-container {
+
+    // For Table Header
+    .table-header-container {
+        @include Utils.center-align(center, space-between);
+        padding: 15px;
+        position: relative;
+
+        .filter-container {
+            @include Utils.center-align-items();
+            gap: 15px;
+        }
+
+        .page-control-container {
+            @include Utils.center-align-items();
+            gap: 10px;
+        }
+    }
+
+    // For Table
+    .table {
+        width: 100%;
+        height: 100%;
+        @include Utils.make-dir-style-value(text-align, left, right);
+        color: Colors.$primary-black;
+
+        .table-header {
+            th {
+                @include Fonts.font-semi-bold-normal();
+                padding: 20px 15px;
+                border-bottom: 1px solid Colors.$border;
+            }
+        }
+
+        .table-body {
+            td {
+                padding: 15px;
+                @include Fonts.font-small();
+                vertical-align: top;
+            }
+        }
+    }
+
+    // For Table Filters
+    .filter-input-container {
+        position: absolute;
+        background: #FFFF;
+        width: 100%;
+        left: 0;
+        right: 0;
+        top: 50px;
+        margin: auto;
+        z-index: 1;
+        box-shadow: 0px 4px 8px 0px Colors.$box-shadow;
+        border: 1px solid Colors.$light-active;
+        border-radius: 5px;
+        padding: 15px;
+
+        .filter-inputs {
+            display: grid;
+            gap: 20px;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 300px));
+
+            .input-label {
+                margin-bottom: 5px;
+                display: inline-block;
+                color: Colors.$light-grey;
+                @include Fonts.font-semi-bold-small();
+            }
+        }
+
+        .dropdown-header,
+        .selectbox-container,
+        .dropdown-container {
+            width: 100%;
+        }
+
+        .action-buttons {
+            @include Utils.center-align();
+            padding-top: 15px;
+            margin-top: 20px;
+            border-top: 1px solid Colors.$light-active;
+            gap: 10px;
+        }
+
+        .filter-title {
+            margin: 0 0 10px;
+            @include Fonts.font-semi-bold-medium();
+        }
+    }
+}

@@ -1,0 +1,85 @@
+@use '../../styles/Utils';
+@use '../../styles/Colors';
+@use '../../styles/Fonts';
+
+.device-report-list-ctr {
+
+    padding: 20px;
+    
+    .device-report-container {
+        background: Colors.$white;
+        border-radius: 8px;
+        box-shadow: 0px 2px 4px 0px Colors.$box-shadow;
+    }
+    
+    .device-status {
+        @include Fonts.font-small();
+        color: Colors.$active;
+    }
+
+    .location-container {
+        @include Fonts.font-small();
+        @include Utils.make-dir-style-value(text-align, left, right);
+
+        .theatre-name {
+            margin-bottom: 10px;
+            color: Colors.$primary-black;
+        }
+
+        .city {
+            color: Colors.$active;
+        }
+    }
+
+    .bandwidth-container {
+        @include Fonts.font-small();
+        @include Utils.make-dir-style-value(text-align, left, right);
+
+        .bandwidth {
+            margin-bottom: 10px;
+        }
+
+        .avg-bandwidth {
+            color: Colors.$light-grey;
+        }
+    }
+}
+
+.device-status-ctr {
+    @include Utils.center-align(center, flex-start);
+    padding: 20px;
+    background-color: Colors.$white;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+    gap: 15px;
+    border-radius: 8px;
+
+    div {
+        position: relative;
+        @include Fonts.font-normal();
+        color: Colors.$primary-black;
+        @include Utils.center-align-items();
+        @include Utils.make-dir-style-value(text-align, left, right);
+        @include Utils.make-dir-style-attribute(padding-left, padding-right, 20px);
+        @include Utils.make-dir-style-attribute(margin-left, margin-right, 10px);
+
+        span.status-count {
+            @include Fonts.font-semi-bold-small();
+            @include Utils.make-dir-style-value(text-align, left, right);
+            @include Utils.make-dir-style-attribute(margin-right, margin-left, 5px);
+        }
+
+        &::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 3px;
+            position: absolute;
+            margin: auto;
+            top: 0;
+            bottom: 0;
+            background-color: Colors.$grey;
+            @include Utils.make-dir-style-attribute(left, right, 0);
+        }
+    }
+}

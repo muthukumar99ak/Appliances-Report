@@ -1,0 +1,27 @@
+@use '../../styles/Utils';
+@use '../../styles/Colors';
+@use '../../styles/Fonts';
+
+.custom-button {
+    padding: 9px 10px;
+    gap: 5px;
+    border-radius: 8px;
+    background: Colors.$button-background;
+    color: Colors.$primary-black;
+    @include Fonts.font-semi-bold-small();
+    text-align: center;
+    border: 0;
+    outline: 0;
+    cursor: pointer;
+    @include Utils.center-align();
+
+    svg {
+        max-height: 20px;
+        max-width: 20px;
+    }
+
+    &:hover, &:active {
+        border: 0;
+        outline: 0;
+    }
+}

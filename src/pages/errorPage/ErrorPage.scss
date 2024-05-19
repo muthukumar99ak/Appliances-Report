@@ -1,0 +1,29 @@
+@use '../../styles/Utils';
+@use '../../styles/Fonts';
+
+.error-page-container {
+    @include Utils.center-align();
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+
+    :not(.link-to-home) {
+        margin: 5px 0;
+        padding: 0;
+    }
+
+    .oops-text {
+        font-size: 80px;
+    }
+
+    .error-status {
+        @include Fonts.font-huge();
+    }
+
+    .link-to-home {
+        text-decoration: none;
+        margin: 15px 0;
+        width: 100px;
+        @include Fonts.font-medium();
+    }
+}

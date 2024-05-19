@@ -1,0 +1,26 @@
+@use '../../styles/Utils';
+@use '../../styles/Colors';
+@use '../../styles/Fonts';
+
+.search-input-container {
+    width: 240px;
+    height: 32px;
+    border-radius: 4px;
+    border: 1px solid Colors.$border;
+    background: Colors.$white;
+    @include Utils.center-align-items();
+
+    input {
+        border-radius: 4px;
+        border: 0;
+        height: 100%;
+        outline: none;
+        padding: 4px 8px;
+        width: calc(100% - 26px);
+
+        &::placeholder {
+            @include Fonts.font-normal();
+            @include Utils.make-dir-style-value(text-align, left, right);
+        }
+    }
+}

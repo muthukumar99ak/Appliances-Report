@@ -1,0 +1,28 @@
+@import url("https://fonts.googleapis.com/css2?family=Commissioner:wght@100..900&display=swap");
+
+@import "./styles/_Utils";
+@import "./styles/_Colors";
+@import "./styles/_Fonts";
+
+body {
+    margin: 0;
+    font-family: "Commissioner", sans-serif;
+    -webkit-font-smoothing: antialiased;
+    font-weight: 400;
+    background: $background-color;
+}
+
+.app-container {
+
+    * {
+        box-sizing: border-box;
+    }
+
+    .device-report-ctr {
+        padding: 20px;
+    }
+
+    .text-decoration-none {
+        text-decoration: none;
+    }
+}

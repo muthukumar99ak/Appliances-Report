@@ -1,0 +1,19 @@
+@use '../../styles/Utils';
+@use '../../styles/Colors';
+@use '../../styles/Fonts';
+
+.empty-screen-container {
+    height: 80vh;
+    width: 100vw;
+    @include Utils.center-align();
+    flex-direction: column;
+
+    img {
+        max-width: 340px;
+    }
+
+    p {
+        @include Fonts.font-large();
+        color: Colors.$primary-black;
+    }
+}
