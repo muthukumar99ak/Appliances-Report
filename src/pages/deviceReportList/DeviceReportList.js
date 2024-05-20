@@ -1,70 +1,31 @@
+// Components
 import Header from "../../components/header/Header";
 import Table from "../../components/table/Table";
-import { DEVICE_REPORT_LIST_COLUMNS, getBadgeTypeByStatus, getFilterElementsForDeviceReport } from '../../helper/deviceReportListHelper';
 import Badge from '../../components/badge/Badge';
-import { useCallback, useEffect, useState } from 'react';
-import './DeviceReportList.scss';
+// Helpers
+import { DEVICE_REPORT_LIST_COLUMNS, getBadgeTypeByStatus, DEVICE_REPORT_FILTERS } from '../../helpers/deviceReportListHelper';
+// Constants
 import LOADING_STATES from "../../constants/loadingStates";
-import Loader from "../../components/loader/Loader";
-import EmptyScreen from "../../components/emptyScreen/EmptyScreen";
+// Custom hooks
+import useDeviceReportList from '../../customHooks/useDeviceReportList';
+// Scss
+import './DeviceReportList.scss';
 
 const {
-    FETCHING,
     FETCHED_AND_AVAILABLE,
-    FETCHED_BUT_EMPTY,
     ERROR
 } = LOADING_STATES;
 
 const DeviceReportList = () => {
-    const [deviceReports, setDeviceReports] = useState([]);
-    const [countByDownloadStatus, setCountByDownloadStatus] = useState({});
-    const [loadingState, setLoadingState] = useState(FETCHING);
-    const [error, setError] = useState("");
-
-    const getQueryString = (params = {}) => {
-        return Object.keys(params).reduce((acc, cur) => {
-            if (typeof params[cur] !== "undefined") {
-                acc.push(`${cur}=${params[cur]}`)
-            }
-            return acc;
-        }, []).join('&');
-    }
-
-    const getDeviceReports = useCallback(
-        async (selectedFilters) => {
-            let queryString = getQueryString(selectedFilters);
-            try {
-                const response = await fetch(`http://localhost:3001/api/v1/appliances?${queryString}`);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                const { appliances = [] } = await response.json();
-                const countByDownloadStatus = getDownloadStatusCount(appliances);
-                setCountByDownloadStatus(countByDownloadStatus);
-                setLoadingState(appliances.length > 0 ? FETCHED_AND_AVAILABLE : FETCHED_BUT_EMPTY);
-                setDeviceReports(appliances);
-            } catch (e) {
-                setError(e.message);
-                setLoadingState(ERROR);
-            }
-        },
-        []
-    )
-
-    useEffect(() => {
-        getDeviceReports();
-    }, [
-        getDeviceReports
-    ]);
-
-    const getDownloadStatusCount = (deviceReports) => {
-        const groupedReports = Object.groupBy(deviceReports, report => report.downloadStatus);
-        const countByDownloadStatus = Object.keys(groupedReports).reduce((acc, cur) => {
-            acc[cur] = groupedReports[cur].length;
-            return acc;
-        }, {});
-        return countByDownloadStatus;
-    }
+    const {
+        deviceReports,
+        countByDownloadStatus,
+        loadingState,
+        error,
+        totalCount,
+        filtersValues, 
+        filtersDispatch
+    } = useDeviceReportList();
 
     const renderDownloadStatusBadge = () => {
         return Object.keys(countByDownloadStatus).map((status, index) => {
@@ -78,32 +39,33 @@ const DeviceReportList = () => {
         })
     }
 
-    const getDownloadStatusOptionsForFilter = () => {
-        return Object.keys(countByDownloadStatus).map(status => ({
-            label: status,
-            value: status.toLowerCase()
-        }));
+    const renderTable = () => {
+        return <Table
+            rowData={deviceReports}
+            rowLength={totalCount}
+            loadingState={loadingState}
+            columns={DEVICE_REPORT_LIST_COLUMNS}
+            advancedfilters={DEVICE_REPORT_FILTERS}
+            filtersValues={filtersValues}
+            filtersDispatch={filtersDispatch}
+        />
     }
 
     const renderDeviceReportList = () => {
-        const downloadStatusOptions = getDownloadStatusOptionsForFilter();
         return (
             <div className="device-report-list-ctr">
-                <div className="device-status-ctr">
-                    {renderDownloadStatusBadge()}
-                </div>
+                {Object.keys(countByDownloadStatus).length > 0 && (
+                    <div className="device-status-ctr">
+                        {renderDownloadStatusBadge()}
+                    </div>
+                )}
                 <div className="device-report-container">
-                    <Table
-                        onFilter={(selectedFilters) => getDeviceReports(selectedFilters)}
-                        filters={getFilterElementsForDeviceReport(downloadStatusOptions)}
-                        rowData={deviceReports}
-                        columns={DEVICE_REPORT_LIST_COLUMNS}
-                    />
+                    {renderTable()}
                 </div>
             </div>
         )
     }
-    
+
     const renderError = () => {
         return (
             <div className='error-container'>
@@ -113,23 +75,10 @@ const DeviceReportList = () => {
         )
     }
 
-    const renderUiByLoadingState = () => {
-        switch (loadingState) {
-            case FETCHING:
-                return <Loader />;
-            case FETCHED_AND_AVAILABLE:
-                return renderDeviceReportList();
-            case FETCHED_BUT_EMPTY:
-                return <EmptyScreen />
-            case ERROR:
-                return renderError();
-        }
-    }
-
     return (
         <div className="app-container">
             <Header />
-            {renderUiByLoadingState()}
+            {loadingState === ERROR ? renderError() : renderDeviceReportList()}
         </div>
     );
 }

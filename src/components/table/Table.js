@@ -1,36 +1,30 @@
-import { useCallback, useEffect, useState } from 'react';
+// Pre-defined
+import PropTypes from 'prop-types';
+// Components
+import TableHeaderControls from './tableHeaderControls/TableHeaderControls';
+import EmptyScreen from '../emptyScreen/EmptyScreen';
+import Loader from '../loader/Loader';
+// Constants
+import LOADING_STATES from '../../constants/loadingStates';
+// Scss
 import './Table.scss';
-import TableHeader from './tableHeader/TableHeader';
+
+const {
+    FETCHING,
+    FETCHED_AND_AVAILABLE,
+    FETCHED_BUT_EMPTY,
+    ERROR
+} = LOADING_STATES;
 
 const Table = ({
     rowData = [],
+    rowLength,
     columns = [],
-    filters = [],
-    onFilter
+    advancedfilters = [],
+    filtersValues,
+    filtersDispatch,
+    loadingState = FETCHED_AND_AVAILABLE
 }) => {
-    const [showByValue, setShowByValue] = useState(10);
-    const [rowsData, setRowsData] = useState(rowData);
-
-    const onSelectedPageChange = useCallback(
-        (selectedPage = 1) => {
-            const data = [...rowData];
-            setRowsData(data.slice(
-                (selectedPage - 1) * showByValue,
-                selectedPage * showByValue
-            ));
-        },
-        [
-            rowData,
-            showByValue
-        ]
-    )
-
-    useEffect(() => {
-        onSelectedPageChange();
-    }, [
-        showByValue,
-        onSelectedPageChange
-    ])
 
     const renderTableHeaderColumns = () => {
         return (
@@ -59,37 +53,83 @@ const Table = ({
         })
     }
 
+    const renderEmptyScreen = () => {
+        return (
+            <tr>
+                <td colSpan={columns.length}>
+                    <EmptyScreen />
+                </td>
+            </tr>
+        )
+    }
+
     const renderTableRows = () => {
-        return rowsData.map((row) => (
+        return rowData.map((row) => (
             <tr key={row.serialNo}>
                 {renderRowColumns(row)}
             </tr>
         ))
     }
 
+    const renderLoader = () => {
+        return (
+            <tr>
+                <td colSpan={columns.length}>
+                    <Loader />
+                </td>
+            </tr>
+        )
+    }
+
+    const renderTableRowsUiByLoadingState = () => {
+        switch (loadingState) {
+            case FETCHING:
+                return renderLoader();
+            case FETCHED_AND_AVAILABLE:
+                return renderTableRows();
+            case FETCHED_BUT_EMPTY:
+                return renderEmptyScreen();
+        }
+    }
+
     const renderHeader = () => {
-        return <TableHeader
-            onFilterSearch={onFilter}
-            filters={filters}
-            onSelectedPageChange={onSelectedPageChange}
-            setShowByValue={setShowByValue}
-            showByValue={showByValue}
-            rowLength={rowData.length} />
+        return <TableHeaderControls
+            advancedfilters={advancedfilters}
+            rowLength={rowLength}
+            filtersValues={filtersValues}
+            filtersDispatch={filtersDispatch}
+        />
     }
 
     return (
         <div className='table-container'>
             {renderHeader()}
-            <table className='table'>
-                <thead className='table-header'>
-                    {renderTableHeaderColumns()}
-                </thead>
-                <tbody className='table-body'>
-                    {renderTableRows()}
-                </tbody>
-            </table>
+            <div className='table-scroll-container'>
+                <table className='table'>
+                    <thead className='table-header'>
+                        {renderTableHeaderColumns()}
+                    </thead>
+                    <tbody className='table-body'>
+                        {renderTableRowsUiByLoadingState()}
+                    </tbody>
+                </table>
+            </div>
         </div>
     )
 }
+
+Table.propTypes = {
+    rowData: PropTypes.array,
+    rowLength: PropTypes.number,
+    columns: PropTypes.array,
+    advancedfilters: PropTypes.array,
+    filtersValues: PropTypes.object,
+    loadingState: PropTypes.oneOf([
+        FETCHED_AND_AVAILABLE,
+        FETCHED_BUT_EMPTY,
+        FETCHING,
+        ERROR
+    ])
+};
 
 export default Table;

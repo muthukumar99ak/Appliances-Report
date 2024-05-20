@@ -1,15 +1,18 @@
 
+import PropTypes from 'prop-types';
 import './Button.scss';
 
 const Button = ({
     ctrCls = "",
     icon: Icon,
-    onClick = () => {},
-    children = ""
+    children = "",
+    disabled = false,
+    onClick = () => undefined
 }) => {
 
     return (
-        <button 
+        <button
+            disabled={disabled}
             className={`custom-button ${ctrCls}`}
             onClick={onClick}
         >
@@ -18,5 +21,12 @@ const Button = ({
         </button>
     )
 }
+
+Button.propTypes = {
+    ctrCls: PropTypes.string,
+    children: PropTypes.string,
+    disabled: PropTypes.bool,
+    onClick: PropTypes.func
+};
 
 export default Button;

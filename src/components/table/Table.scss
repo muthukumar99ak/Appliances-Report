@@ -4,15 +4,28 @@
 
 .table-container {
 
+    .table-scroll-container {
+        position: relative;
+        min-height: 400px;
+        max-height: calc(100vh - 240px);
+        overflow: auto
+    }
+
     // For Table Header
     .table-header-container {
         @include Utils.center-align(center, space-between);
         padding: 15px;
         position: relative;
+        flex-wrap: wrap;
 
         .filter-container {
             @include Utils.center-align-items();
             gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .dropdown-container {
+            z-index: 2;
         }
 
         .page-control-container {
@@ -29,6 +42,11 @@
         color: Colors.$primary-black;
 
         .table-header {
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            background: Colors.$white;
+
             th {
                 @include Fonts.font-semi-bold-normal();
                 padding: 20px 15px;
@@ -42,6 +60,13 @@
                 @include Fonts.font-small();
                 vertical-align: top;
             }
+
+            .loader-container {
+                top: unset;
+                position: relative;
+                height: 400px;
+                width: 100%;
+            }
         }
     }
 
@@ -54,7 +79,7 @@
         right: 0;
         top: 50px;
         margin: auto;
-        z-index: 1;
+        z-index: 3;
         box-shadow: 0px 4px 8px 0px Colors.$box-shadow;
         border: 1px solid Colors.$light-active;
         border-radius: 5px;
@@ -90,6 +115,26 @@
         .filter-title {
             margin: 0 0 10px;
             @include Fonts.font-semi-bold-medium();
+        }
+    }
+    
+}
+
+@media (max-width: 767px) {
+    .table-header-container {
+        .filter-container {
+            width: 100%;
+            .search-input-container, div, .custom-button {
+                width: 100%;
+            }
+            .filter-input-container {
+                top: 0;
+            }
+        }
+        .page-control-container {
+            margin: 15px 0 0;
+            flex-wrap: wrap;
+            justify-content: center;
         }
     }
 }

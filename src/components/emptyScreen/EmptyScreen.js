@@ -1,8 +1,10 @@
-import { EmptyScreenImage } from '../../assets';
+import { memo } from 'react';
+import PropTypes from 'prop-types';
+import { EmptyScreenImage } from '../../assets/images';
 import './EmptyScreen.scss';
 
 const EmptyScreen = ({
-    message
+    message = ""
 }) => {
     return (
         <div className='empty-screen-container'>
@@ -14,4 +16,8 @@ const EmptyScreen = ({
     )
 }
 
-export default EmptyScreen;
+EmptyScreen.propTypes = {
+    message: PropTypes.string
+};
+
+export default memo(EmptyScreen);

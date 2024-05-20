@@ -1,18 +1,26 @@
+// Pre-defined
 import { useCallback, useEffect, useState } from 'react';
 import { useParams } from "react-router-dom";
-import { LogIcon, PieIcon, SpeedTestIcon } from '../../assets';
+// Assets
+import { LogIcon, PieIcon, SpeedTestIcon } from '../../assets/images';
+// Components
 import Button from '../../components/button/Button';
 import Badge from '../../components/badge/Badge';
-import Breadcrumbs from '../../components/breadcrumbs/Breadcrumbs';
+import EmptyScreen from '../../components/emptyScreen/EmptyScreen';
+import Breadcrumbs from '../../components/breadcrumb/Breadcrumb';
+import DeviceLocation from '../../components/deviceLocation/DeviceLocation';
+import Loader from '../../components/loader/Loader';
 import Tab from '../../components/tab/Tab';
 import DeviceInfo from '../../components/deviceInfo/DeviceInfo';
-import { DEVICE_INFO_COLUMNS } from '../../helper/deviceInfoHelper';
+// Helpers
+import { DEVICE_INFO_COLUMNS } from '../../helpers/deviceInfoHelper';
+import { getBadgeTypeByStatus } from '../../helpers/deviceReportListHelper';
+// Constants
 import LOADING_STATES from '../../constants/loadingStates';
+// Server
+import { getApplianceInfo } from '../../server/server';
+// Scss
 import './DeviceReport.scss';
-import { getBadgeTypeByStatus } from '../../helper/deviceReportListHelper';
-import Location from '../../components/location/Location';
-import Loader from '../../components/loader/Loader';
-import EmptyScreen from '../../components/emptyScreen/EmptyScreen';
 
 const {
     FETCHING,
@@ -28,19 +36,16 @@ const DeviceReport = () => {
     const [error, setError] = useState("");
 
     const getDeviceReportById = useCallback(
-        async () => {
-            try {
-                const response = await fetch(`http://localhost:3001/api/v1/appliance/${deviceId}/info`);
-                if (!response.ok) {
-                    throw new Error('Failed to fetch data');
-                }
-                const deviceReport = await response.json();
-                setLoadingState(!!deviceReport ? FETCHED_AND_AVAILABLE : FETCHED_BUT_EMPTY);
-                setDeviceInfo(deviceReport);
-            } catch (e) {
-                setError(e.message);
-                setLoadingState(ERROR);
-            }
+        () => {
+            getApplianceInfo(deviceId)
+                .then(deviceReport => {
+                    setLoadingState(!!deviceReport ? FETCHED_AND_AVAILABLE : FETCHED_BUT_EMPTY);
+                    setDeviceInfo(deviceReport);
+                })
+                .catch(e => {
+                    setError(e.error?.message || "Error while fetching data");
+                    setLoadingState(e.error?.message ? FETCHED_BUT_EMPTY : ERROR);
+                })
         },
         [deviceId]
     )
@@ -80,10 +85,12 @@ const DeviceReport = () => {
     }
 
     const renderDeviceInfo = () => {
-        return <DeviceInfo
-            infoColumns={DEVICE_INFO_COLUMNS}
-            deviceInfo={deviceInfo}
-        />
+        return (
+            <DeviceInfo
+                infoColumns={DEVICE_INFO_COLUMNS}
+                deviceInfo={deviceInfo}
+            />
+        )
     }
 
     const renderDeviceStatus = () => {
@@ -91,8 +98,16 @@ const DeviceReport = () => {
         const badgeType = getBadgeTypeByStatus(deviceStatus);
         return (
             <div className='device-storage-and-status'>
-                <Badge label={deviceStatus} badgeType={badgeType} isRounded />
-                <Badge label={storage} icon={PieIcon} isRounded />
+                <Badge
+                    label={deviceStatus}
+                    badgeType={badgeType}
+                    isRounded
+                />
+                <Badge
+                    label={storage}
+                    icon={PieIcon}
+                    isRounded
+                />
             </div>
         );
     }
@@ -113,7 +128,7 @@ const DeviceReport = () => {
         return (
             <div className='device-report-header'>
                 {renderDeviceIdAndHeaderButtons()}
-                <Location deviceInfo={deviceInfo} />
+                <DeviceLocation deviceInfo={deviceInfo} />
                 {renderDeviceStatus()}
             </div>
         )
@@ -121,9 +136,12 @@ const DeviceReport = () => {
 
     const renderTabs = () => {
         const tabDetails = getTabDetails();
-        return <Tab
-            tabs={tabDetails}
-            ctrCls={"device-report-tabs"} />
+        return (
+            <Tab
+                tabs={tabDetails}
+                ctrCls={"device-report-tabs"}
+            />
+        )
     }
 
     const renderError = () => {

@@ -1,4 +1,14 @@
 
+const getJoinLocationString = (deviceInfo) => {
+    const { 
+        city = "", 
+        state = "", 
+        country = "" 
+    } = deviceInfo?.location || {};
+    const locationString = [city, state, country].filter(loc => loc).join(", ");
+    return locationString;
+}
+
 const DEVICE_INFO_COLUMNS = [
     {
         title: 'Device Serial',
@@ -11,11 +21,7 @@ const DEVICE_INFO_COLUMNS = [
     {
         title: 'City',
         key: 'city',
-        onRenderer: (deviceInfo) => {
-            const { city = "", state = "", country = "" } = deviceInfo?.location || {};
-            const locationString = [city, state, country].filter(loc => loc).join(", ");
-            return locationString;
-        }
+        onRenderer: (deviceInfo) => getJoinLocationString(deviceInfo)
     },
     {
         title: 'ISP Payment Responsibility',
@@ -53,5 +59,6 @@ const DEVICE_INFO_COLUMNS = [
 
 // Export functions or values 
 export {
-    DEVICE_INFO_COLUMNS
+    DEVICE_INFO_COLUMNS,
+    getJoinLocationString
 }

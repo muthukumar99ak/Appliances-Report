@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import './DeviceInfo.scss';
 
 const DeviceInfo = ({
@@ -6,10 +7,10 @@ const DeviceInfo = ({
 }) => {
 
     const renderInfoColumn = (column, index) => {
-        const { 
+        const {
             title,
-            key, 
-            onRenderer 
+            key,
+            onRenderer
         } = column;
         let infoValue = deviceInfo[key];
 
@@ -17,9 +18,12 @@ const DeviceInfo = ({
         if (typeof onRenderer === 'function') {
             infoValue = onRenderer(deviceInfo);
         }
-        
+
         return (
-            <div className="device-info" key={key}>
+            <div 
+                className="device-info" 
+                key={key}
+            >
                 <h6 className='info-title'>{title}</h6>
                 <p className="info-value">{infoValue || "-"}</p>
             </div>
@@ -32,5 +36,16 @@ const DeviceInfo = ({
         </div>
     )
 }
+
+DeviceInfo.propTypes = {
+    infoColumns: PropTypes.arrayOf(
+        PropTypes.shape({
+            title: PropTypes.string,
+            key: PropTypes.string,
+            onRenderer: PropTypes.func
+        })
+    ),
+    deviceInfo: PropTypes.object
+};
 
 export default DeviceInfo;

@@ -1,7 +1,13 @@
+// React Router
 import { Link } from "react-router-dom";
-import Badge, { BADGE_TYPES } from "../components/badge/Badge";
-import Location from "../components/location/Location";
+// Components
+import Badge from "../components/badge/Badge";
+import DeviceLocation from "../components/deviceLocation/DeviceLocation";
+// Constants
 import INPUT_TYPES from "../constants/inputTypes";
+import DOWNLOAD_STATUS from "../constants/downloadStatus";
+import BADGE_TYPES from "../constants/badgeTypes";
+import DEVICE_STATUS from "../constants/deviceStatus";
 
 
 const getBadgeTypeByStatus = (status) => {
@@ -9,13 +15,8 @@ const getBadgeTypeByStatus = (status) => {
     const { RED, BLUE, GREEN, YELLOW } = BADGE_TYPES;
     const downloadStatusBadgeTypes = {
         failed: RED,
-        scheduled: YELLOW,
         cancelled: YELLOW,
         downloading: BLUE,
-        downloaded: GREEN,
-        stalled: RED,
-        archived: RED,
-        unarchiving: BLUE,
         succeeded: GREEN
     }
     const deviceStatusBadgeTypes = {
@@ -48,7 +49,7 @@ const DEVICE_REPORT_LIST_COLUMNS = [
     {
         key: "location",
         title: "Location",
-        onRenderer: (row) => <Location deviceInfo={row} />
+        onRenderer: (row) => <DeviceLocation deviceInfo={row} />
     },
     {
         key: "bandwidth",
@@ -76,28 +77,30 @@ const DEVICE_REPORT_LIST_COLUMNS = [
     }
 ];
 
-const getFilterElementsForDeviceReport = (downloadStatusOptions = []) => ([{
+const DEVICE_REPORT_FILTERS = [{
     key: "deviceStatus",
     type: INPUT_TYPES.SELECT,
     label: "Device status",
-    options: [{
-        label: "Online",
-        value: "online"
-    },{
-        label: "Offline",
-        value: "Offline"
-    }]
+    options: [
+        { label: "Online", value: DEVICE_STATUS.ONLINE },
+        { label: "Offline", value: DEVICE_STATUS.OFFLINE }
+    ]
 },
 {
     key: "downloadStatus",
     type: INPUT_TYPES.SELECT,
     label: "Download status",
-    options: downloadStatusOptions
-}])
+    options: [
+        { label: "Failed", value: DOWNLOAD_STATUS.FAILED },
+        { label: "Cancelled", value: DOWNLOAD_STATUS.CANCELLED },
+        { label: "Downloading", value: DOWNLOAD_STATUS.DOWNLOADING },
+        { label: "Succeeded", value: DOWNLOAD_STATUS.SUCCEEDED }
+    ]
+}];
 
 // Export Functions OR Values
 export {
     DEVICE_REPORT_LIST_COLUMNS,
-    getFilterElementsForDeviceReport,
+    DEVICE_REPORT_FILTERS,
     getBadgeTypeByStatus
 }

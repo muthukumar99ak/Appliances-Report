@@ -1,12 +1,8 @@
 const DOWNLOAD_STATUS = {
     FAILED: "failed",
-    SCHEDULED: "scheduled",
     CANCELLED: "cancelled",
     DOWNLOADING: "downloading",
-    DOWNLOADED: "downloaded",
-    STALLED: "stalled",
-    ARCHIVED: "archived",
-    UNARCHICING: "unarchiving"
+    SUCCEEDED: "succeeded"
 }
 
 Object.freeze(DOWNLOAD_STATUS);

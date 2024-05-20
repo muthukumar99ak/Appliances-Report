@@ -1,5 +1,5 @@
+import PropTypes from 'prop-types';
 import React, { useState } from 'react';
-
 import './Tab.scss';
 
 const Tab = ({
@@ -39,6 +39,12 @@ const Tab = ({
             </div>
         </div>
     );
+};
+
+Tab.propTypes = {
+    tabs: PropTypes.array,
+    ctrCls: PropTypes.string,
+    activeTab: PropTypes.number
 };
 
 export default Tab;

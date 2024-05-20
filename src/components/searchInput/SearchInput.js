@@ -1,9 +1,10 @@
+import PropTypes from 'prop-types';
 import { useState } from 'react';
+import { SearchIcon } from '../../assets/images';
 import './SearchInput.scss'
-import { SearchIcon } from '../../assets';
 
 const SearchInput = ({
-    onSearch = () => {}
+    onSearch = () => undefined
 }) => {
     const [query, setQuery] = useState('');
 
@@ -21,7 +22,7 @@ const SearchInput = ({
         <div className='search-input-container'>
             <input
                 type="text"
-                placeholder="Search"
+                placeholder="Search device serial"
                 value={query}
                 onChange={handleChange}
                 onKeyUp={handleKeyPress}
@@ -30,5 +31,9 @@ const SearchInput = ({
         </div>
     );
 }
+
+SearchInput.propTypes = {
+    onSearch: PropTypes.func
+};
 
 export default SearchInput;

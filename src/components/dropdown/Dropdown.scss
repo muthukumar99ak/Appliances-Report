@@ -25,8 +25,22 @@
             cursor: pointer;
             @include Utils.center-align(center, space-between);
             @include Fonts.font-normal();
+            position: relative;
+
+            .clear-icon {
+                position: absolute;
+                @include Utils.make-dir-style-attribute(right, left, 32px);
+                top: 0;
+                bottom: 0;
+                @include Utils.center-align-items();
+
+                svg {
+                    height: 12px;
+                    width: 12px;
+                    color: Colors.$primary-black;
+                }
+            }
         }
-        
         
         .dropdown-list {
             position: absolute;
@@ -42,6 +56,10 @@
             .dropdown-item {
                 padding: 7px 10px;
                 cursor: pointer;
+
+                &.selected {
+                    background-color: Colors.$light-active;
+                }
             }
             
             .dropdown-item:hover {

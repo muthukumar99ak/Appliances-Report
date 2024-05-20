@@ -1,13 +1,23 @@
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import './Breadcrumbs.scss';
-import { ChevronRight } from '../../assets';
+import { ChevronRight } from '../../assets/images';
+import './Breadcrumb.scss';
 
-const Breadcrumbs = ({ paths }) => {
+const Breadcrumbs = ({
+    paths = []
+}) => {
 
     const renderBreadCrumbItem = (crumb, index) => {
-        const { path, active, label  } = crumb;
+        const {
+            path,
+            active,
+            label
+        } = crumb;
         return (
-            <li className="breadcrumb-item" key={index}>
+            <li
+                className="breadcrumb-item"
+                key={index}
+            >
                 {index > 0 && <ChevronRight />}
                 {active ? (
                     <Link to={path} className="breadcrumb-link">
@@ -28,5 +38,15 @@ const Breadcrumbs = ({ paths }) => {
         </div>
     );
 }
+
+Breadcrumbs.propTypes = {
+    paths: PropTypes.arrayOf(
+        PropTypes.shape({
+            path: PropTypes.string,
+            active: PropTypes.bool,
+            label: PropTypes.string
+        })
+    )
+};
 
 export default Breadcrumbs;
