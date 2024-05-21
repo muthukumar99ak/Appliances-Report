@@ -87,7 +87,7 @@ const Table = ({
                 return renderLoader();
             case FETCHED_AND_AVAILABLE:
                 return renderTableRows();
-            case FETCHED_BUT_EMPTY:
+            default:
                 return renderEmptyScreen();
         }
     }

@@ -164,10 +164,10 @@ const DeviceReport = () => {
                         {renderTabs()}
                     </>
                 );
-            case FETCHED_BUT_EMPTY:
-                return <EmptyScreen message={`No data found for the device serial number ${deviceId}`} />
             case ERROR:
                 return renderError();
+            default:
+                return <EmptyScreen message={`No data found for the device serial number ${deviceId}`} />
         }
     }
 
