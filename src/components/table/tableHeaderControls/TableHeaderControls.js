@@ -9,32 +9,32 @@ import Pagination from "../../pagination/Pagination";
 import SearchInput from "../../searchInput/SearchInput";
 import TableFilter from "../tableFilter/TableFilter";
 // Actions
-import { setPageNumber, setSearchString, setSelectedFilters, setShowByValue } from "../store/actionCreators/tableFiltersActions";
+import { setCurrentPage, setSearchString, setSelectedFilters, setShowByValue } from "../store/actionCreators/tableFiltersActions";
 
 const TableHeaderControls = ({
     advancedfilters,
     rowLength,
-    filtersValues,
-    filtersDispatch
+    filterControls,
+    filterControlsDispatch
 }) => {
     const [isFilterOpen, setIsFilterOpen] = useState(false);
     const {
-        pageNumber,
+        currentPage,
         showByValue,
         selectedFilters
-    } = filtersValues;
+    } = filterControls;
 
     const onPageSizeChange = (size) => {
-        setShowByValue(filtersDispatch, size);
+        setShowByValue(filterControlsDispatch, size);
     }
 
-    const onPageChange = (pageNumber) => {
-        setPageNumber(filtersDispatch, pageNumber);
+    const onPageChange = (currentPage) => {
+        setCurrentPage(filterControlsDispatch, currentPage);
     }
 
     const onSearchFilter = (selectedValues) => {
         setIsFilterOpen(false);
-        setSelectedFilters(filtersDispatch, selectedValues);
+        setSelectedFilters(filterControlsDispatch, selectedValues);
     }
 
     const renderTableFilter = () => {
@@ -51,7 +51,7 @@ const TableHeaderControls = ({
     const renderPageControl = () => {
         return (
             <Pagination
-                pageNumber={pageNumber}
+                currentPage={currentPage}
                 rowLength={rowLength}
                 showByValue={showByValue}
                 onPageChange={onPageChange}
@@ -64,9 +64,11 @@ const TableHeaderControls = ({
         <div>
             <div className="table-header-container">
                 <div className="filter-container">
-                    <SearchInput onSearch={(searchValue) => setSearchString(filtersDispatch, searchValue)} />
+                    <SearchInput onSearch={(searchValue) => setSearchString(filterControlsDispatch, searchValue)} />
                     <div>
                         <Button 
+                            showBadge={true}
+                            badgeCount={Object.keys(selectedFilters).length}
                             icon={FilterIcon} 
                             onClick={() => setIsFilterOpen(!isFilterOpen)}
                         >
@@ -84,7 +86,7 @@ const TableHeaderControls = ({
 TableHeaderControls.propTypes = {
     rowLength: PropTypes.number,
     advancedfilters: PropTypes.array,
-    filtersValues: PropTypes.object
+    filterControls: PropTypes.object
 };
 
 export default TableHeaderControls;

@@ -12,7 +12,6 @@ import useDeviceReportList from '../../customHooks/useDeviceReportList';
 import './DeviceReportList.scss';
 
 const {
-    FETCHED_AND_AVAILABLE,
     ERROR
 } = LOADING_STATES;
 
@@ -23,8 +22,8 @@ const DeviceReportList = () => {
         loadingState,
         error,
         totalCount,
-        filtersValues, 
-        filtersDispatch
+        filterControls, 
+        filterControlsDispatch
     } = useDeviceReportList();
 
     const renderDownloadStatusBadge = () => {
@@ -46,8 +45,8 @@ const DeviceReportList = () => {
             loadingState={loadingState}
             columns={DEVICE_REPORT_LIST_COLUMNS}
             advancedfilters={DEVICE_REPORT_FILTERS}
-            filtersValues={filtersValues}
-            filtersDispatch={filtersDispatch}
+            filterControls={filterControls}
+            filterControlsDispatch={filterControlsDispatch}
         />
     }
 

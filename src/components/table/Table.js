@@ -21,8 +21,8 @@ const Table = ({
     rowLength,
     columns = [],
     advancedfilters = [],
-    filtersValues,
-    filtersDispatch,
+    filterControls,
+    filterControlsDispatch,
     loadingState = FETCHED_AND_AVAILABLE
 }) => {
 
@@ -96,8 +96,8 @@ const Table = ({
         return <TableHeaderControls
             advancedfilters={advancedfilters}
             rowLength={rowLength}
-            filtersValues={filtersValues}
-            filtersDispatch={filtersDispatch}
+            filterControls={filterControls}
+            filterControlsDispatch={filterControlsDispatch}
         />
     }
 
@@ -123,7 +123,7 @@ Table.propTypes = {
     rowLength: PropTypes.number,
     columns: PropTypes.array,
     advancedfilters: PropTypes.array,
-    filtersValues: PropTypes.object,
+    filterControls: PropTypes.object,
     loadingState: PropTypes.oneOf([
         FETCHED_AND_AVAILABLE,
         FETCHED_BUT_EMPTY,

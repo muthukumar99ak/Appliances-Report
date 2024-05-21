@@ -1,7 +1,7 @@
 import { TABLE_FILTERS_ACTION_TYPES } from "../actions/tableFiltersActionTypes"
 
 
-export const setPageNumber = (dispatch, value) => {
+export const setCurrentPage = (dispatch, value) => {
     dispatch({
         type: TABLE_FILTERS_ACTION_TYPES.SET_PAGE_NUMBER,
         payload: value

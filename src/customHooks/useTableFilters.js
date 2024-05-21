@@ -8,7 +8,7 @@ const createInitialState = (pageOptions) => {
     } = pageOptions;
     return {
         ...filtersInitialState,
-        pageNumber: (offset / limit) + 1,
+        currentPage: (offset / limit) + 1,
         showByValue: limit
     }
 }

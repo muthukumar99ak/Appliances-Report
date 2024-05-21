@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { ChevronLeft, ChevronRight } from "../../assets/images";
 import Dropdown from '../dropdown/Dropdown';
 import './Pagination.scss';
+import usePagination from '../../customHooks/usePagination';
 
 const SHOW_BY_OPTIONS = [
     { value: 10, label: 10 },
@@ -11,19 +12,21 @@ const SHOW_BY_OPTIONS = [
 
 const Pagination = ({
     rowLength = 0,
-    pageNumber = 1,
+    currentPage = 1,
     showByValue = 10,
     onSizeChange = () => undefined,
     onPageChange = () => undefined
 }) => {
-    // Get how many numbers to show by rowLength and showByValue
-    const listToShow = Math.ceil(rowLength / showByValue);
+    const {
+        totalPages,
+        getPageNumbers
+    } = usePagination(rowLength, showByValue, currentPage);
 
     const renderPrevPageIcon = () => {
         return (
             <span
-                className={`pagination-arrow ${pageNumber === 1 ? "disabled" : ""}`}
-                onClick={() => onPageChange(pageNumber - 1)}
+                className={`pagination-arrow ${currentPage === 1 ? "disabled" : ""}`}
+                onClick={() => onPageChange(currentPage - 1)}
             >
                 <ChevronLeft />
             </span>
@@ -33,8 +36,8 @@ const Pagination = ({
     const renderNextPageIcon = () => {
         return (
             <span
-                className={`pagination-arrow ${pageNumber === listToShow ? "disabled" : ""}`}
-                onClick={() => onPageChange(pageNumber + 1)}
+                className={`pagination-arrow ${currentPage === totalPages ? "disabled" : ""}`}
+                onClick={() => onPageChange(currentPage + 1)}
             >
                 <ChevronRight />
             </span>
@@ -42,8 +45,8 @@ const Pagination = ({
     }
 
     const renderPaginationOptions = (index) => {
-        const value = index + 1;
-        const isCurrentPage = pageNumber === value;
+        const value = index;
+        const isCurrentPage = currentPage === value;
         return (
             <li
                 key={index + 1}
@@ -72,10 +75,7 @@ const Pagination = ({
             <div className="pagination-container">
                 {renderPrevPageIcon()}
                 <ul className="pagination-list">
-                    {Array.from(
-                        { length: listToShow },
-                        (_, index) => renderPaginationOptions(index)
-                    )}
+                    {getPageNumbers().map(number => renderPaginationOptions(number))}
                 </ul>
                 {renderNextPageIcon()}
             </div>
@@ -85,7 +85,7 @@ const Pagination = ({
 
 Pagination.propTypes = {
     rowLength: PropTypes.number,
-    pageNumber: PropTypes.number,
+    currentPage: PropTypes.number,
     showByValue: PropTypes.number,
     onSizeChange: PropTypes.func,
     onPageChange: PropTypes.func

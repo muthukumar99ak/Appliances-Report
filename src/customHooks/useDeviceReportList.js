@@ -16,20 +16,20 @@ const useDeviceReportList = () => {
     const [loadingState, setLoadingState] = useState(FETCHING);
     const [error, setError] = useState("");
     const [totalCount, setTotalCount] = useState(null);
-    const [filtersValues, filtersDispatch] = useTableFilters();
+    const [filterControls, filterControlsDispatch] = useTableFilters();
     const {
-        pageNumber,
+        currentPage,
         showByValue,
         searchString,
         selectedFilters
-    } = filtersValues;
+    } = filterControls;
     const depFilterString = JSON.stringify(selectedFilters);
 
     
     const getQueryParams = useCallback(
         () => {
             return {
-                offset: (pageNumber - 1) * showByValue,
+                offset: (currentPage - 1) * showByValue,
                 fetchCount: showByValue,
                 searchString: searchString,
                 deviceStatus: selectedFilters.deviceStatus,
@@ -37,7 +37,7 @@ const useDeviceReportList = () => {
             }
         },
         [ 
-            pageNumber,
+            currentPage,
             showByValue,
             searchString,
             selectedFilters.deviceStatus,
@@ -77,7 +77,7 @@ const useDeviceReportList = () => {
     useEffect(() => {
         getDeviceReports();
     }, [
-        pageNumber,
+        currentPage,
         showByValue,
         searchString,
         depFilterString,
@@ -90,8 +90,8 @@ const useDeviceReportList = () => {
         loadingState,
         error,
         totalCount,
-        filtersValues, 
-        filtersDispatch
+        filterControls, 
+        filterControlsDispatch
     }
 }
 

@@ -1,7 +1,7 @@
 import { TABLE_FILTERS_ACTION_TYPES } from "../actions/tableFiltersActionTypes";
 
 export const filtersInitialState = {
-    pageNumber: 1,
+    currentPage: 1,
     showByValue: 10,
     searchString: "",
     selectedFilters: {}
@@ -21,24 +21,24 @@ export const tableFiltersReducer = (state, action) => {
         case SET_PAGE_NUMBER:
             return {
                 ...state,
-                pageNumber: payload
+                currentPage: payload
             };
         case SET_SHOW_BY_VALUE:
             return {
                 ...state,
-                pageNumber: 1,
+                currentPage: 1,
                 showByValue: payload
             }
         case SET_SEARCH_STRING:
             return {
                 ...state,
-                pageNumber: 1,
+                currentPage: 1,
                 searchString: payload
             }
         case SET_SELECTED_FILTERS:
             return {
                 ...state,
-                pageNumber: 1,
+                currentPage: 1,
                 selectedFilters: payload
             }
         case RESET_FILTERS:
